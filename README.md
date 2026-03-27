@@ -1,147 +1,186 @@
-# Knowledge Base Query Assistant
+# 📚 Knowledge-Based Query Assistant
 
-An intelligent Query Assistant with a dark-themed GUI built using Python, Tkinter, TF-IDF vectorization, and cosine similarity for accurate semantic matching.
+An AI-powered system that enables users to query information from uploaded documents using **Retrieval-Augmented Generation (RAG)**. This project leverages modern NLP techniques, vector search, and large language models to provide accurate, context-aware answers.
 
-## Features
+---
 
-- **Top 3 Results**: Returns the three most relevant answers ranked by similarity score
-- **TF-IDF + Cosine Similarity**: Advanced semantic matching with stop-word removal to avoid false positives
-- **Synonym Expansion**: Expands query abbreviations (ai → artificial intelligence, ml → machine learning, nlp → natural language processing)
-- **Dark Theme GUI**: Modern dark interface with improved readability and professional styling
-- **Real-time Status**: Shows "Searching..." and "Done" indicators
-- **Similarity Scores**: Displays confidence scores (0.0-1.0) for each result
-- **Clear Button**: Resets input and output fields instantly
-- **Logging**: Prints user queries and matched results to console for debugging
-- **100% Accuracy**: Tested with 20 diverse test cases covering multiple query formats
-- **No Comments**: Clean, production-ready code
+## 🚀 Features
 
-## Installation
+* 📄 Upload and process documents (PDF, DOCX, TXT)
+* 🔍 Semantic search using vector embeddings
+* 🤖 AI-generated answers using LLMs
+* ⚡ Fast similarity search with FAISS
+* 🧠 Context-aware responses (RAG architecture)
+* 🔗 REST API for easy integration
 
-### Prerequisites
-- Python 3.8+
-- pip
+---
 
-### Setup
+## 🏗️ System Architecture
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/knowledge-base-query-assistant.git
-cd knowledge-base-query-assistant
+```
+User Query
+   ↓
+Backend API (Django)
+   ↓
+Text Processing & Chunking
+   ↓
+Embedding Generation
+   ↓
+FAISS Vector Database
+   ↓
+Relevant Context Retrieval
+   ↓
+LLM (OpenAI)
+   ↓
+Final Response
 ```
 
-2. Install dependencies:
+---
+
+## 🛠️ Tech Stack
+
+| Category        | Technology Used                |
+| --------------- | ------------------------------ |
+| Backend         | Django / Django REST Framework |
+| Language        | Python                         |
+| AI Model        | OpenAI API                     |
+| Vector Database | FAISS                          |
+| File Handling   | PyPDF, Docx, Text Parsers      |
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/Knowledge_based_query_assistant.git
+cd Knowledge_based_query_assistant
+```
+
+### 2️⃣ Create Virtual Environment
+
+```bash
+python -m venv venv
+source venv/bin/activate   # For Linux/Mac
+venv\Scripts\activate      # For Windows
+```
+
+### 3️⃣ Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+### 4️⃣ Set Environment Variables
 
-### Run the GUI Application
+Create a `.env` file and add:
+
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
+### 5️⃣ Run Server
+
 ```bash
-python kbqa_gui.py
+python manage.py runserver
 ```
 
-The application will:
-1. Print accuracy metrics to console (`Accuracy: 100.0% (20/20)`)
-2. Launch the GUI window
-3. Ready for queries
+---
 
-### Query the Assistant
+## 📌 API Endpoints
 
-1. Type your question in the input field
-2. Press **Enter** or click **Search**
-3. View top 3 results with similarity scores
-4. Click **Clear** to reset fields
-5. Click **Exit** to close
-
-### Console Output Example
-```
-User query: What is machine learning
-Matched: What is machine learning? -> 0.9857
-Matched: What is artificial intelligence? -> 0.5234
-Matched: What is Python? -> 0.3421
-```
-
-## Project Structure
+### 📤 Upload Document
 
 ```
-knowledge-base-query-assistant/
-├── kbqa_gui.py          # Main GUI application
-├── data.json            # Knowledge base (questions + answers)
-├── requirements.txt     # Python dependencies
-└── README.md            # This file
+POST /upload/
 ```
 
-## Data Format
+* Upload file (PDF/DOCX/TXT)
+* Processes and stores embeddings
 
-`data.json` contains Q&A pairs:
-```json
-[
-  {
-    "question": "What is Python?",
-    "answer": "Python is a programming language."
-  },
-  {
-    "question": "What is machine learning?",
-    "answer": "Machine learning is a subset of AI that allows systems to learn from data."
-  }
-]
+### ❓ Ask Query
+
+```
+POST /query/
 ```
 
-## Technical Details
+* Input: User question
+* Output: AI-generated answer
 
-### Matching Algorithm
-- **Vectorizer**: TF-IDF with English stop-words removal
-- **Similarity**: Cosine similarity (0.0 - 1.0)
-- **Threshold**: Results with score > 0.05 are returned
-- **Ranking**: Top 3 by descending similarity score
+---
 
-### GUI Components
-- Dark theme with custom colors
-- Segoe UI font for professional appearance
-- Real-time status indicator
-- Scrollable output area
-- Keyboard support (Enter to search)
+## 🔄 Workflow
 
-## Testing
+1. Upload document
+2. Extract and preprocess text
+3. Split into chunks
+4. Generate embeddings
+5. Store in FAISS
+6. User submits query
+7. Retrieve relevant chunks
+8. Generate response using LLM
 
-Run accuracy tests:
-```bash
-python -c "from kbqa_gui import run_accuracy_tests; run_accuracy_tests()"
-```
+---
 
-Output:
-```
-Accuracy: 100.0% (20/20)
-```
+## 💡 Example Use Cases
 
-## Requirements
+* 📖 Academic research assistant
+* 🏢 Enterprise knowledge management
+* 📊 Document-based Q&A system
+* 🧾 Policy and legal document analysis
 
-- scikit-learn >= 1.0
-- tkinter (included with Python)
+---
 
-## Supported Query Abbreviations
+## 📈 Future Enhancements
 
-| Abbreviation | Expansion |
-|---|---|
-| ai | artificial intelligence |
-| ml | machine learning |
-| nlp | natural language processing |
+* 🌐 Frontend UI (React-based chat interface)
+* 🔐 User authentication & role management
+* ⚡ Caching for faster responses
+* 📊 Evaluation metrics for answer accuracy
+* 🔎 Hybrid search (keyword + semantic)
+* 🧠 Conversation memory support
 
-## Accuracy
+---
 
-Tested on 20 diverse queries covering:
-- Direct questions
-- Partial matches
-- Synonym variations
-- Paraphrased queries
+## 🤝 Contributing
 
-**Result: 100% Top-1 Accuracy**
+Contributions are welcome!
 
-## License
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
-MIT License
+---
 
-## Author
+## 📝 License
 
-Created as an intelligent knowledge base assistant with semantic search capabilities.
+This project is licensed under the MIT License.
+
+---
+
+## 👩‍💻 Author
+
+**Nithya**
+
+* Passionate about AI, Backend Development, and Real-world Problem Solving
+
+---
+
+## ⭐ Acknowledgements
+
+* OpenAI for language models
+* FAISS for efficient similarity search
+* Django for backend framework
+
+---
+
+## 📬 Contact
+
+For queries or collaboration:
+📧 Reach out via GitHub Issues or Discussions
+
+---
+
+> ⭐ If you found this project useful, don’t forget to star the repository!
